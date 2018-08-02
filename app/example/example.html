@@ -1,0 +1,63 @@
+<div class="container">
+    <h1>{{example.title}}</h1>
+    <div class="row">
+        <div class="col-sm-3">
+            <h3>Charts:</h3>
+            <div class="form-group" ng-if="!example.editorMode">
+                <ul ng-if="example.chartList.length > 0">
+                    <li ng-repeat="chart in example.chartList">
+                        <a href="#" ng-click="example.onMenuClick($event, chart)">{{chart.label}}</a>
+                    </li>
+                </ul>
+                <button class="btn btn-success" ng-click="example.addChart()">Add new chart</button>
+            </div>
+
+            <div ng-if="example.editorMode">
+                <div ng-repeat="element in example.weather">
+                    <div class="form-group">
+                        <input type="checkbox" name="{{element.id}}" id="{{element.id}}" 
+                            ng-change="example.onVisibilityChange(element)" 
+                            ng-model="element.show" />
+                        <label for="{{element.id}}">{{element.name}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Color:</label>
+                        <input type="text" class="form-control" ng-model="element.color" />
+                    </div>
+                    <div class="form-group">
+                        <label>Type:</label>
+                        <select class="form-control" 
+                            ng-model="element.type"
+                        >
+                            <option value="line">Line</option>
+                            <option value="bar">Bar</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-success" ng-click="example.saveChart()">Save data</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="form-group" ng-if="!example.editorMode">
+                <div class="input-group">
+                    <input type="text" class="form-control" 
+                        uib-datepicker-popup="{{example.datepickerOptions.format}}" 
+                        ng-model="example.datepickerOptions.date" 
+                        is-open="example.datepickerOptions.popupOpened" 
+                        datepicker-options="example.datepickerOptions.dateOptions" 
+                        ng-required="true" 
+                        close-text="Close"
+                        ng-change="changeDate()"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="example.openPopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>                
+            </div>
+            <div chart title="{{example.chartTitle}}" data="{{example.weather}}"></div>
+        </div>
+    </div>
+</div>
